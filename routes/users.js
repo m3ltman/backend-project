@@ -6,7 +6,17 @@ const sendAllUsers = (req, res) => {
 }
 
 const sendUser = (req, res) => {
-  res.send(users[req.params.id]);
+  const user = users.find((item) => {
+    let result = item._id === req.params.id;
+    return result;
+  });
+  
+  if(!user) {
+    res.status(404).send({ "message": "Нет пользователя с таким id" });
+    return;
+  }
+  
+  res.send(user);
 }
 
 module.exports = {
